@@ -1,0 +1,7 @@
+# 不上传本地环境配置
+__pycache__/
+.env
+*.env
+*.db
+*.pyc
+chroma_db/
