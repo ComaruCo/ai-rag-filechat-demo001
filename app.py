@@ -13,12 +13,15 @@ from utils.qa import get_qa_chain #用户交互处理
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
 
-# 加载.env文件中的API Key
+# 本地开发 加载.env文件中的API Key
 load_dotenv()
+# 部署时读取 secrets（优先使用 secrets 中的 key）
+os.environ["OPENAI_API_KEY"] = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY"))
+
 #设置浏览器标签页文字 页面布局为宽屏模式
 st.set_page_config(page_title="文件问答 Demo", layout="wide")
 #页面顶部显示大标题
-st.title("文件问答 Demo001")
+st.title("文件问答 Demo001-1")
 
 # 1 画面加载时候就有简易对话框
 # 2 对话框可以进行彼此单次100字符以内的问答

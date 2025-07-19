@@ -5,3 +5,4 @@ __pycache__/
 *.db
 *.pyc
 chroma_db/
+.streamlit/
