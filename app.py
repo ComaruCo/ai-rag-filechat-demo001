@@ -15,19 +15,19 @@ from langchain.embeddings import OpenAIEmbeddings
 
 import toml
 
-# 本地开发 加载.env文件中的API Key
+# 本地开发：加载 .env 文件中的 API Key
 load_dotenv()
-# 部署时读取 secrets（优先使用 secrets 中的 key）
-#os.environ["OPENAI_API_KEY"] = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY"))
-# 读取 secrets.toml 文件
-secrets = toml.load("/etc/secrets/secrets.toml")
-os.environ["OPENAI_API_KEY"] = secrets.get("OPENAI_API_KEY")
 
-#设置浏览器标签页文字 页面布局为宽屏模式
-st.set_page_config(page_title="文件问答 Demo", layout="wide")
-#页面顶部显示大标题
-st.title("文件问答 Demo001-2")
+# 尝试从 secrets 读取（部署时），否则从 .env 读取（本地）
+try:
+    # Render 平台 secrets.toml 路径
+    secrets = toml.load("/etc/secrets/secrets.toml")
+    os.environ["OPENAI_API_KEY"] = secrets.get("OPENAI_API_KEY")
+except FileNotFoundError:
+    # 本地 .env 加载
+    os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
+# 0 追加功能
 # 1 画面加载时候就有简易对话框
 # 2 对话框可以进行彼此单次100字符以内的问答
 # 3 画面要保留对话过程
@@ -54,6 +54,10 @@ st.title("文件问答 Demo001-2")
 # 16 用户权限设定
 # 17 用户用量设定
 
+#设置浏览器标签页文字 页面布局为宽屏模式
+st.set_page_config(page_title="文件问答 Demo", layout="wide")
+#页面顶部显示大标题
+st.title("文件问答 Demo001-3")
 # 上传文件
 uploaded_file = st.file_uploader("请上传一个 txt 文本文件", type=["txt"])
 
