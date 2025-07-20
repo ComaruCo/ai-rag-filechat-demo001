@@ -1,0 +1,11 @@
+#让 Render 自动识别项目并部署，还能绑定 API Key
+services:
+  - type: web
+    name: ai-rag-filechat
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app.py
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
